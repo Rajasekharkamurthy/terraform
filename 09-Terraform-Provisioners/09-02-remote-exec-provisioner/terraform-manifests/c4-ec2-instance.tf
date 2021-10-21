@@ -2,7 +2,7 @@
 resource "aws_instance" "my-ec2-vm" {
   ami           = data.aws_ami.amzlinux.id 
   instance_type = var.instance_type
-  key_name      = "terraform-key"
+  key_name      = "ec2key"
   #count = terraform.workspace == "default" ? 1 : 1    
 	user_data = file("apache-install.sh")  
   vpc_security_group_ids = [aws_security_group.vpc-ssh.id, aws_security_group.vpc-web.id]
@@ -16,7 +16,7 @@ resource "aws_instance" "my-ec2-vm" {
     host = self.public_ip # Understand what is "self"
     user = "ec2-user"
     password = ""
-    private_key = file("private-key/terraform-key.pem")
+    private_key = file("private-key/ec2key.pem")
   }  
 
  # Copies the file-copy.html file to /tmp/file-copy.html
